@@ -13,13 +13,13 @@ contract ZombieHelper is ZombieFeeding {
 
   // 2. 在这里插入 levelUp 函数 
 
-    function changeName(uint _zombieId, string _newName) external aboveLevel(2, _zombieId) {
-        require(msg.sender == zombieToOwner[_zombieId], "authentication is invalid");
+    function changeName(uint _zombieId, string _newName) external aboveLevel(2, _zombieId) ownerOf(_zombieId){
+        // require(msg.sender == zombieToOwner[_zombieId], "authentication is invalid");
         zombies[_zombieId].name = _newName;
     }
 
-    function changeDna(uint _zombieId, uint _newDna) external aboveLevel(20, _zombieId) {
-        require(msg.sender == zombieToOwner[_zombieId], "authentication is invalid");
+    function changeDna(uint _zombieId, uint _newDna) external aboveLevel(20, _zombieId) ownerOf(_zombieId){
+        // require(msg.sender == zombieToOwner[_zombieId], "authentication is invalid");
         zombies[_zombieId].dna = _newDna;
     }
 
