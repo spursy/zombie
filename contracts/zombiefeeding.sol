@@ -32,12 +32,12 @@ contract ZombieFeeding is ZombieFactory {
         return (_zombie.readyTime <= now);
     }
 
-    modifier ownerOf(uint _zombieId) {
+    modifier onlyOwnerOf(uint _zombieId) {
         require(msg.sender == zombieToOwner[_zombieId], "authentication is invalid");
         _;
     }
 
-    function feedAndMultiply(uint _zombieId, uint _targetDna, string _species) internal ownerOf(_zombieId){
+    function feedAndMultiply(uint _zombieId, uint _targetDna, string _species) internal onlyOwnerOf(_zombieId){
         // require(msg.sender == zombieToOwner[_zombieId], "the authentication is invalid.");
         Zombie storage myZombie = zombies[_zombieId];
         require(_isReady(myZombie), "it is invalid.");

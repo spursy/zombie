@@ -4,22 +4,31 @@ import "./zombiefeeding.sol";
 
 contract ZombieHelper is ZombieFeeding {
 
-  // 1. 在这里定义 levelUpFee
+    uint levelUpFee = 0.001 ether;
 
     modifier aboveLevel(uint _level, uint _zombieId) {
-        require(zombies[_zombieId].level >= _level, "level is no valid");
+        require(zombies[_zombieId].level >= _level, "level is invalid");
         _;
     }
 
-  // 2. 在这里插入 levelUp 函数 
+    function withdraw() external onlyOwner {
+        owner.transfer(this.balance);
+    }
 
-    function changeName(uint _zombieId, string _newName) external aboveLevel(2, _zombieId) ownerOf(_zombieId){
-        // require(msg.sender == zombieToOwner[_zombieId], "authentication is invalid");
+    function setLevelUpFee(uint _fee) external onlyOwner {
+        levelUpFee = _fee;
+    }
+
+    function levelUp(uint _zombieId) external payable {
+        require(msg.value == levelUpFee, "fee is invalid");
+        zombies[_zombieId].level++;
+    }
+
+    function changeName(uint _zombieId, string _newName) external aboveLevel(2, _zombieId) onlyOwnerOf(_zombieId) {
         zombies[_zombieId].name = _newName;
     }
 
-    function changeDna(uint _zombieId, uint _newDna) external aboveLevel(20, _zombieId) ownerOf(_zombieId){
-        // require(msg.sender == zombieToOwner[_zombieId], "authentication is invalid");
+    function changeDna(uint _zombieId, uint _newDna) external aboveLevel(20, _zombieId) onlyOwnerOf(_zombieId) {
         zombies[_zombieId].dna = _newDna;
     }
 
