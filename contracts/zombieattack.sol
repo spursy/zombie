@@ -1,13 +1,15 @@
 pragma solidity ^0.4.23;
 
 import "./zombiehelper.sol";
+import "./safemath.sol";
 
 contract ZombieBattle is ZombieHelper {
+    using SafeMath for uint;
     uint randNonce = 0;
     uint attackVictoryProbability = 70;
 
     function randMod(uint _modulus) internal returns(uint) {
-        randNonce = randNonce ++;
+        randNonce = randNonce.add(1);
         return uint(keccak256(now, msg.sender, randNonce)) % _modulus;
     }
 
