@@ -54,7 +54,7 @@ library SafeMath32 {
 
     function mul(uint32 a, uint32 b) internal pure returns (uint32) {
         if (a == 0) {
-        return 0;
+            return 0;
         }
         uint32 c = a * b;
         assert(c / a == b);
@@ -78,17 +78,17 @@ library SafeMath32 {
         assert(c >= a);
         return c;
     }
-    }
+}
 
     /**
     * @title SafeMath16
     * @dev SafeMath library implemented for uint16
     */
-    library SafeMath16 {
+library SafeMath16 {
 
     function mul(uint16 a, uint16 b) internal pure returns (uint16) {
         if (a == 0) {
-        return 0;
+            return 0;
         }
         uint16 c = a * b;
         assert(c / a == b);
